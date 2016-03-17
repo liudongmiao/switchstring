@@ -206,7 +206,7 @@ switch-hash: 40674
 if-else: 46031
 ```
 
-什么？`Switch-String`居然比`if-else`快，并且，有较大差异？此外，`Switch-String`和`switch`相比，只是一个进行了反编译而言，理论应该一致，也居然有这么大的差异？为什么不对呢？
+什么？`Switch-String`居然比`if-else`快，并且，有较大差异？此外，`Switch-String`和`Switch-Hash`相比，只是一个进行了反编译而言，理论应该一致，也居然有这么大的差异？为什么不对呢？
 
 ## 使用正确的基准进行测试
 
