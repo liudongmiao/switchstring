@@ -306,3 +306,4 @@ benchSwitchString  thrpt  200  23727556.990 ± 413475.864  ops/s
 1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Java Microbenchmark Harness，Java 官方出品的微基准测试框架
 2. [IDEA](https://www.jetbrains.com/idea/)，本文使用 30 天试用版反编译 class 文件
 3. [GitHub - switchstring](http://github.com/liudongmiao/switchstring), 本文及演示代码托管站点
+4. [Markdown Here](https://github.com/adam-p/markdown-here)，感谢此插件顺利发布到微信公众号，当前需要打[高亮代码中强制插入换行补丁](https://github.com/adam-p/markdown-here/pull/329)
