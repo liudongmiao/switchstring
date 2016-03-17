@@ -257,19 +257,52 @@ shell> mvn clean install
 shell> java -jar target/benchmarks.jar
 ```
 
-最终结果如下(去掉了展示的类名`SwitchString.`)：
+为了便于测试，加进`Switch-Enum`的测试用例，代码大致如下：
+
+```java
+public class SwitchString {
+
+  static int switchEnum(String key) {
+    AaB a = AaB.valueOf(key);
+    switch (a) {
+      case AaAa:
+      case AaBB:
+      case BBAa:
+      case BBBB:
+        return 1;
+      default:
+        return -1;
+    }
+  }
+
+  enum AaB {
+    AaAa, AaBB, BBAa, BBBB;
+  }
+
+  @Benchmark
+  public void benchSwitchEnum() {
+    for (String k : KEYS) {
+      switchEnum(k);
+    }
+  }
+
+}
+```
+
+最终结果如下(去掉了展示的类名)，居然`Switch-Enum`最慢：
 
 ```
-Benchmar            Mode  Cnt         Score         Error  Units
-benchIfElse        thrpt  200  58482661.821 ± 1520619.334  ops/s
-benchSwitchHash    thrpt  200  22273983.631 ±  383706.735  ops/s
-benchSwitchString  thrpt  200  25540588.906 ±  345998.596  ops/s
+Benchmark           Mode  Cnt         Score         Error  Units
+benchIfElse        thrpt  200  65405833.624 ± 746598.439  ops/s
+benchSwitchEnum    thrpt  200  13041096.499 ± 143678.376  ops/s
+benchSwitchHash    thrpt  200  24179186.018 ± 523982.268  ops/s
+benchSwitchString  thrpt  200  23727556.990 ± 413475.864  ops/s
 ```
 
-可以明显见到，在此测试用例中，`if-else`比`Switch-String`快，而`Switch-String`与`Switch`相当。
+可以明显见到，在此测试用例中，`if-else`比`Switch-String`快，而`Switch-String`与`Switch-Hash`相当，`Switch-Enum`最慢。
 
 
 ## 致谢
-1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Oracle开发的Java基准测试框架
+1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Java Microbenchmark Harness，Java官方出品的微基准测试框架
 2. [IDEA](https://www.jetbrains.com/idea/)，本文使用30天试用版反编译class文件
 3. [GitHub - switchstring](http://github.com/liudongmiao/switchstring), 本文及演示代码托管站点

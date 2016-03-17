@@ -90,6 +90,23 @@ public class SwitchString {
       s3 - s2, s4 - s3);
   }
 
+  static int switchEnum(String key) {
+    AaB a = AaB.valueOf(key);
+    switch (a) {
+      case AaAa:
+      case AaBB:
+      case BBAa:
+      case BBBB:
+        return 1;
+      default:
+        return -1;
+    }
+  }
+
+  enum AaB {
+    AaAa, AaBB, BBAa, BBBB;
+  }
+
   @Benchmark
   public void benchSwitchString() {
     for (String k : KEYS) {
@@ -108,6 +125,13 @@ public class SwitchString {
   public void benchIfElse() {
     for (String k : KEYS) {
       ifElse(k);
+    }
+  }
+
+  @Benchmark
+  public void benchSwitchEnum() {
+    for (String k : KEYS) {
+      switchEnum(k);
     }
   }
 
