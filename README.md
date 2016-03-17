@@ -1,12 +1,12 @@
-# Java 7中Switch String探究
+# Java 7 中 Switch String 探究
 
-### Java 7中允许对String进行Switch，本文探讨其实现过程；并且构建特殊情况下的测试用例，得到正确的基准测试方法。
+### Java 7 中允许对 String 进行 Switch，本文探讨其实现过程；并且构建特殊情况下的测试用例，得到正确的基准测试方法。
 
-本文也是`no zuo no die`的典范。如果不是`zuo`，不会去构建特殊测试用例，无法得到正确的基准测试方法；如果不是`zuo`，为了在手机上显示良好（720p下每行只能有38个字符），不惜把变量弄短，去掉一些修饰符，`import`时使用`*`，缩进使用`2`个字符。
+本文也是`no zuo no die`的典范。如果不是`zuo`，不会去构建特殊测试用例，无法得到正确的基准测试方法；如果不是`zuo`，为了在手机上显示良好（720p 下每行只能有 38 个字符），不惜把变量弄短，去掉一些修饰符，`import`时使用`*`，缩进使用`2`个字符。
 
-## Switch String介绍
+## Switch String 介绍
 
-在Java 7之前，`switch`基本只支持`int`及其变种，包括但不限于`char`, `short`, `byte`以及`enum`。在Java 7中，允许`switch`处理`String`。
+在 Java 7 之前，`switch`基本只支持`int`及其变种，包括但不限于`char`, `short`, `byte`以及`enum`。在 Java 7 中，允许`switch`处理`String`。
 
 一个典型的可能代码如下：
 
@@ -27,7 +27,7 @@ public class SwitchString {
 
 ```
 
-## Switch String反编译看实现
+## Switch String 反编译看实现
 
 看起来，是不是很炫？反编译看看。
 
@@ -197,7 +197,7 @@ public class SwitchString {
 
 ## 测试结果和预期不符
 
-由于现在机器CPU都很好，所以我直接运行了10亿次，结果出来了：
+由于现在机器 CPU 都很好，所以我直接运行了 10 亿次，结果出来了：
 
 ```
 round: 1000000000
@@ -250,7 +250,7 @@ public class SwitchString {
 }
 ```
 
-最后，测试结果。默认预热20秒，运行20秒，跑10轮；上面有3个测试，要跑20分钟。
+最后，测试结果。默认预热 20 秒，运行 20 秒，跑 10 轮；上面有 3 个测试，要跑 20 分钟。
 
 ```
 shell> mvn clean install
@@ -303,6 +303,6 @@ benchSwitchString  thrpt  200  23727556.990 ± 413475.864  ops/s
 
 
 ## 致谢
-1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Java Microbenchmark Harness，Java官方出品的微基准测试框架
-2. [IDEA](https://www.jetbrains.com/idea/)，本文使用30天试用版反编译class文件
+1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Java Microbenchmark Harness，Java 官方出品的微基准测试框架
+2. [IDEA](https://www.jetbrains.com/idea/)，本文使用 30 天试用版反编译 class 文件
 3. [GitHub - switchstring](http://github.com/liudongmiao/switchstring), 本文及演示代码托管站点
