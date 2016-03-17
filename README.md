@@ -292,7 +292,7 @@ public class SwitchString {
 最终结果如下(去掉了展示的类名)，居然`Switch-Enum`最慢：
 
 ```
-Benchmark           Mode  Cnt         Score         Error  Units
+Benchmark           Mode  Cnt         Score        Error  Units
 benchIfElse        thrpt  200  65405833.624 ± 746598.439  ops/s
 benchSwitchEnum    thrpt  200  13041096.499 ± 143678.376  ops/s
 benchSwitchHash    thrpt  200  24179186.018 ± 523982.268  ops/s
