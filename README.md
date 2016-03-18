@@ -1,6 +1,6 @@
 # Java 7 中 Switch String 探究
 
-### Java 7 中允许对 String 进行 Switch，本文探讨其实现过程；并且构建特殊情况下的测试用例，得到正确的基准测试方法。
+### Java 7 中允许对 String 进行 Switch，本文探讨其实现过程；并且构建特殊情况下的测试用例，应该使用 JMH 作为基准测试方法。
 
 本文也是`no zuo no die`的典范。如果不是`zuo`，不会去构建特殊测试用例，无法得到正确的基准测试方法；如果不是`zuo`，为了在手机上显示良好（720p 下每行只能有 38 个字符），不惜把变量弄短，去掉一些修饰符，`import`时使用`*`，缩进使用`2`个字符。
 
@@ -62,7 +62,7 @@ public class SwitchString {
 
 通过反编译的代码来看，可以明显看到，实际上是先把字符串取`hashCode`，进行第一层`switch`，再直接比较字符串，得到相应的临时值；然后进行第二层`switch`。
 
-如果`hashCode`值不一样，能有效避免字符串比较(当然还是得比较)，有性能上的提升；如果`hashCode`值一样，还得继续比较，不如直接的`if-else`。
+如果`hashCode`值不一样，能有效避免字符串比较（当然还是得比较），有性能上的提升；如果`hashCode`值一样，还得继续比较，不如直接的`if-else`。
 
 ## 构建字符串让`hashCode`相等
 
@@ -289,7 +289,7 @@ public class SwitchString {
 }
 ```
 
-最终结果如下(去掉了展示的类名)，居然`Switch-Enum`最慢：
+最终结果如下（去掉了展示的类名），居然`Switch-Enum`最慢：
 
 ```
 Benchmark           Mode  Cnt         Score        Error  Units
@@ -301,6 +301,10 @@ benchSwitchString  thrpt  200  23727556.990 ± 413475.864  ops/s
 
 可以明显见到，在此测试用例中，`if-else`比`Switch-String`快，而`Switch-String`与`Switch-Hash`相当，`Switch-Enum`最慢。
 
+## 总结
+1. 本文通过反编译方法，得出 Java 7 中引入的`switch`支持`String`只是语法糖，不需要 JVM 额外支持。（所以，也可以在 Android 中使用。）
+2. 本文通过阅读`String`的`hashCode`方法，构建`hashCode`值一样的字符串进行特殊测试，比如`Aa`与`BB`的`hashCode`一样，`囝国`与`回回`的`hashCode`一样。
+3. 本文通过实践及分析，得出直接循环测试性能的方法是不准确的，引出 Java 官方的微基准测试框架 JMH。
 
 ## 致谢
 1. [JMH](http://openjdk.java.net/projects/code-tools/jmh/), Java Microbenchmark Harness，Java 官方出品的微基准测试框架
