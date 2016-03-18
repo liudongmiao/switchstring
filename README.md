@@ -1,4 +1,4 @@
-# Java 7 中 Switch String 探究
+﻿# Java 7 中 Switch String 探究
 
 ### Java 7 中允许对 String 进行 Switch，本文探讨其实现过程；并且构建特殊情况下的测试用例，应该使用 JMH 作为基准测试方法。
 
