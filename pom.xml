@@ -84,10 +84,64 @@ THE POSSIBILITY OF SUCH DAMAGE.
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.2</version>
                 <executions>
                     <execution>
+                        <id>shade-${project.artifactId}</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}</finalName>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.openjdk.jmh:jmh-core</exclude>
+                                    <exclude>net.sf.jopt-simple:jopt-simple</exclude>
+                                    <exclude>org.apache.commons:commons-math3</exclude>
+                                </excludes>
+                            </artifactSet>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>me/piebridge/SwitchString</mainClass>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>me/piebridge/generated/**</exclude>
+                                        <exclude>org/openjdk/jmh/infra/generated/**</exclude>
+                                        <exclude>META-INF/BenchmarkList</exclude>
+                                        <exclude>META-INF/CompilerHints</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>shade-${uberjar.name}</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>

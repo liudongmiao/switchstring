@@ -62,7 +62,12 @@ public class SwitchString {
   }
 
   public static void main(String[] a) {
-    int round = parseInt(a[0]);
+    int round;
+    if (a.length > 0) {
+      round = parseInt(a[0]);
+    } else {
+      round = 1000000000;
+    }
     long s1 = currentTimeMillis();
     for (int i = 0; i < round; ++i) {
       for (String key : KEYS) {
